@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <title>问卷调查</title>
+    <link rel="stylesheet" href="./static/main.css" type="text/css" media="all" />
+    <script src="./static/jquery.min.js"></script>
+    <script>
+        const messagest = "一定要说真话哦<br/>......<br/>最喜欢你了^_^";
+        document.addEventListener("DOMContentLoaded", function () {
+            const messages=messagest.split('<br/>')
+            let index = 0;
+            const answerInput = document.getElementById('answer');
+    
+            function showPopup() {
+                if (index < messages.length) {
+                    let popup = document.createElement("div");
+                    popup.className = "popup";
+                    popup.textContent = messages[index];
+                    let button = document.createElement("button");
+                    button.textContent = "关闭";
+                    button.onclick = function () {
+                        document.body.removeChild(popup);
+                        if (index === messages.length - 1) {
+                            // 点击最后一个关闭按钮时触发输入框放大动画
+                            answerInput.classList.add('animate');
+                        } else {
+                            index++;
+                            showPopup();
+                        }
+                    };
+                    popup.appendChild(document.createElement("br"));
+                    popup.appendChild(button);
+                    document.body.appendChild(popup);
+                }
+            }
+    
+            showPopup();
+        });
+    </script>
+    <style>
+        .youscreen{ position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: #ffcad382; display: flex ; flex-direction: column; align-items: center; justify-content: center; } .youtext{ font-size: 7vw; } body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f5f5f7; margin: 0; padding: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; } .container { background: white; border-radius: 20px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); padding: 40px; width: 90%; max-width: 500px; text-align: center; } /* 输入框美化 */ #question { font-size: 24px; color: #333; margin-bottom: 30px; font-weight: 600; } .input-container { position: relative; margin-bottom: 30px; } #answer { width: 100%; padding: 15px 20px; border: 2px solid #e0e0e0; border-radius: 12px; font-size: 16px; color: #333; transition: all 0.3s ease; background-color: #fafafa; box-sizing: border-box; transform: scale(0.8); opacity: 0; } /* 定义动画 */ @keyframes scaleIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } } #answer.animate { animation: scaleIn 0.5s ease-out forwards; } #answer:focus { outline: none; border-color: #e0d5ff; background-color: white; box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.1); } #answer::placeholder { color: #999; } /* 按钮美化 */ #nextBtn { background-color: #c9b7fb; color: white; border: none; padding: 15px 30px; border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; width: 100%; } #nextBtn:hover { background-color: #c9b7fb; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(108, 92, 231, 0.3); } #nextBtn:active { transform: translateY(0); box-shadow: none; } /* 弹窗样式 */ .popup { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; border: 2px solid #ead9ff; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); text-align: center; z-index: 1000; max-width: 90%; } .popup button { margin-top: 20px; padding: 10px 20px; border-radius: 8px; border: none; background-color: #c9b7fb; color: white; cursor: pointer; transition: background-color 0.3s; } .popup button:hover { background-color: #c9b7fb; } /* 特效页面 */ .youscreen { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: #ffcad382; display: flex; flex-direction: column; align-items: center; justify-content: center; display: none; } .yes-text { font-size: 7vw; color: #6c5ce7; margin-bottom: 30px; } .yes-image { max-width: 80%; border-radius: 20px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); }    
+        .div_btn { position: fixed; cursor: pointer; width: 2.5rem; height: 2.5rem; border: 2px solid #fff; border-radius: 50%; font-size: 1rem; line-height: 2.3rem; text-align: center; z-index: 999; opacity: 0.7; background-color: rgba(0,0,0,.3); } .div_btn a{color:#fff;text-decoration:none;} #btn-make { bottom: 8.5rem; right: 18px; } #div_support { bottom: 4rem; right: 18px; } #btn-make a,#div_support a{text-shadow: 1px 1px 1px #000;}#action-make { bottom: 5rem; position: fixed; width: 100%; height: 80px; z-index: 99999; text-align: center; font-size: 1.5rem; } #action-make .btn1 { color: #fff; background-color: #2196f3; } #action-make .btn-return { float: left; border-radius: 0 2rem 2rem 0; padding: 0.8rem 2.4rem 0.8rem 2.4rem; box-shadow: 0.2rem 0 0.2rem #888888; } #action-make .btn-make { float: right; border-radius: 2rem 0 0 2rem; padding: 0.8rem 1.5rem 0.8rem 1.5rem; box-shadow: 0 0.2rem 0.2rem #888888; }@keyframes text-flicker { 0% {opacity: 0} 49% {opacity: 0} 50% {opacity: 1} }.cur-end{animation: text-flicker 0.8s infinite;}#btn-hot { bottom: 12.5rem; right: 18px; background-color: #bf1e1e; color: #fff; font-weight: bold; }
+    </style>
+</head>
+<body>
+<audio id="music" src="./static/7415606916367272767.mp3"></audio>
+<audio id="musichp" src="./static/7210339637892549434.mp3" loop></audio>
+
+<div class="container">
+    <div id="question"></div>
+    <div class="input-container">
+        <input type="text" id="answer" autocomplete="长9之寂" placeholder="请输入你的答案...">
+    </div>
+    <button onclick="nextQuestion()" id="nextBtn">下一个</button>
+</div>
+
+            
+
+<div class="youscreen" style="display:none;">
+    <h1 class="yes-text">我也喜欢你~♡︎ᐝ</h1>
+    <img src="./static/miao.gif" alt="HAPI" class="yes-image">
+</div>
+
+<script>
+    var id = "1831";
+    var ftitle = "LOVE💗";
+    var data_type = "0";
+    var vip_type = "0";
+    var temp_id = "53";
+    var id = "1831";
+    var data_type = "0";
+    var vip_type = "0";
+    var temp_id = "53";
+    var views = "315704";
+    var dataInfo = {"id":1831,"nid":"370","title":"\u95ee\u5377\u8c03\u67e5","ftitle":"","ctitle":"\u60a8\u6709\u4e00\u4efd\u95ee\u5377\u8c03\u67e5\uff0c\u8bf7\u6ce8\u610f\u586b\u5199\u54c8~","temp_id":53,"cover_url":"http:\/\/web-img2.20it.cn\/static\/images\/gif\/miao.gif","background_url":"","opacity":1,"music_url":"https:\/\/sf5-hl-cdn-tos.douyinstatic.com\/obj\/ies-music\/7210339637892549434.mp3","data_type":0,"vip":0,"views":315704,"views_update":false,"hide_btn":false};
+    dataInfo.is_mobile = /Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent);
+        var play_music = false;
+    
+    function checkAudio(){
+        if(!play_music){
+            var a=document.getElementById("audio_music");play=function(){a.play();document.removeEventListener("touchstart",play,false)};if(a){a.play();document.addEventListener("DOMContentLoaded",function(){play()},false,);document.addEventListener("WeixinJSBridgeReady",function(){play()},false,);document.addEventListener("touchstart",play,false)}
+        }
+    }
+    
+    checkAudio();
+    dataInfo.hide_btn = true;
+var textst = "";
+var textstw = "";
+$.getJSON('./static/chang9zhiji.json', function(data){
+    textst = data.list1.join('<br/>');
+    textstw = data.list2.join('<br/>');
+});
+const answerst = "你<br/>喜欢你<br/>是你<br/>you<br/>我爱你<br/>我喜欢你<br/>你啊<br/>只喜欢你";
+const questionst = "最喜欢的歌是什么?<br/>最喜欢什么颜色?<br/>最喜欢的食物是什么?<br/>最喜欢的季节是什么?<br/>最喜欢什么动物?<br/>最喜欢的人是谁?";
+// const textst = "为什么不填我<br/>说好的地久天长呢<br/>凝视着我，目光别移开<br/>我一直注视着你<br/>拒绝是新型的告白对吧<br/>我能感觉到你心里有我，对不对<br/>我知道你喜欢我的 对吧<br/>我的视线从未从你身上离开<br/>抗拒也许是另一种靠近，对不对对不对";
+// const textstw = "You shouldn't do this<br/>别白费力气啦…… 别白费力气啦…… 别白费力气啦……<br/>只可以钟情于我……<br/>爱你…… 你…… 爱…… 爱你……<br/>I'm sorry<br/>我们注定要一直甜蜜相伴<br/>一切都已经板上钉钉咯<br/>爱你...你...爱...爱你...";
+const opportunity = "再给你一次机会";
+
+
+const music = document.getElementById("music");
+const questions = questionst.split("<br/>");
+let currentStep = 0;
+let isApocalypse = false;
+let retryCount = 0;
+const container = document.querySelector(".container");
+const youscreen = document.querySelector(".youscreen");
+
+function nextQuestion() {
+    if (currentStep === questions.length - 1) {
+        checkFinalAnswer();
+        return;
+    }
+    currentStep++;
+    updateQuestion();
+}
+
+function checkFinalAnswer() {
+    const userAnswer = document.getElementById("answer").value.trim().toLowerCase();
+    const validAnswers = answerst.split("<br/>");
+    if (retryCount === 0 && !validAnswers.includes(userAnswer)) {
+        triggerBloodEffect();
+    } else if (true && validAnswers.includes(userAnswer)) {
+        document.querySelector("#musichp").play();
+        container.style.display = "none";
+        youscreen.style.display = "flex";
+        
+        var btns = document.querySelectorAll('.div_btn');
+        btns.length > 0 ? btns[0].style.display = "block" : '';
+        btns.length > 1 ? btns[1].style.display = "block" : '';
+    } else {
+        triggerDeeperApocalypse();
+    }
+}
+
+function triggerBloodEffect() {
+    music.play();
+    isApocalypse = true;
+    document.body.classList.add("apocalypse-mode");
+    document.body.classList.add("apocalypse-shake");
+    setTimeout(() => {
+        document.body.classList.remove("apocalypse-shake");
+    }, 3000);
+    const interactiveElements = document.querySelectorAll("button, input");
+    interactiveElements.forEach(element => {
+        element.disabled = true;
+        element.style.opacity = "0.5";
+    });
+    const container = document.querySelector(".container");
+    const _0x131158 = document.querySelector(".youscreen");
+    container.style.transform = "scale(1.2) rotate(3deg)";
+    container.style.opacity = "0.8";
+    container.style.filter = "blur(2px)";
+    const bloodTexts = textst.split("<br/>");
+    const createBloodEffect = () => {
+        if (!isApocalypse) return;
+        const bloodText = document.createElement("div");
+        bloodText.className = "blood-text";
+        Object.assign(bloodText.style, {
+            "left": Math.random() * 95 + "%",
+            "top": Math.random() * 95 + "%",
+            "fontSize": Math.random() * 10 + 14 + "px",
+            "animationDelay": Math.random() * 2 + "s"
+        });
+        bloodText.textContent = bloodTexts[Math.floor(Math.random() * bloodTexts.length)];
+        document.body.appendChild(bloodText);
+        const bloodBox = document.createElement("div");
+        bloodBox.className = "blood-box";
+        Object.assign(bloodBox.style, {
+            "left": Math.random() * 90 + "%",
+            "top": Math.random() * 90 + "%",
+            "width": Math.random() * 200 + 100 + "px",
+            "transform": "rotate(" + (Math.random() * 15 - 7.5) + "deg)"
+        });
+        bloodBox.textContent = bloodTexts[Math.floor(Math.random() * bloodTexts.length)];
+        document.body.appendChild(bloodBox);
+        setTimeout(() => {
+            bloodText.style.opacity = "0";
+            setTimeout(() => bloodText.remove(), 2000);
+        }, 8000);
+    };
+    const bloodEffectInterval = setInterval(createBloodEffect, 300);
+    createBloodEffect();
+    setTimeout(() => {
+        clearInterval(bloodEffectInterval);
+        const retryMessage = document.createElement("div");
+        retryMessage.className = "retry-text";
+        retryMessage.textContent = opportunity;
+        document.body.appendChild(retryMessage);
+        setTimeout(() => {
+            retryMessage.remove();
+            document.body.classList.remove("apocalypse-mode");
+            interactiveElements.forEach(element => {
+                element.disabled = false;
+                element.style.opacity = "1";
+            });
+            container.style = "";
+            document.querySelectorAll(".blood-text, .blood-box").forEach(element => element.remove());
+            retryCount++;
+            updateQuestion();
+            isApocalypse = false;
+            music.pause();
+            music.currentTime = 0;
+        }, 3000);
+    }, 5000);
+}
+
+function triggerDeeperApocalypse() {
+    music.play();
+    
+    isApocalypse = true;
+    document.body.classList.add('deep-apocalypse-mode');
+    document.body.classList.add('apocalypse-shake');
+    setTimeout(() => {
+        document.body.classList.remove('apocalypse-shake')
+    }, 3000);
+    const rainContainer = document.createElement("div");
+    rainContainer.className = "blood-rain";
+    document.body.appendChild(rainContainer);
+    setInterval(() => {
+        const bloodDrop = document.createElement("div");
+        bloodDrop.className = "blood-drop";
+        bloodDrop.style.left = Math.random() * 100 + "%";
+        bloodDrop.style.animationDuration = Math.random() * 0.5 + 0.5 + "s";
+        rainContainer.appendChild(bloodDrop);
+        setTimeout(() => bloodDrop.remove(), 1000);
+    }, 50);
+    setInterval(() => {
+        const bloodSplatter = document.createElement("div");
+        bloodSplatter.className = "blood-splatter";
+        bloodSplatter.style.left = Math.random() * 90 + "%";
+        bloodSplatter.style.top = Math.random() * 90 + "%";
+        document.body.appendChild(bloodSplatter);
+        setTimeout(() => bloodSplatter.remove(), 500);
+    }, 300);
+    document.querySelector('.container')?.remove();
+    const texts = textstw.split('<br/>');
+    const createEntity = () => {
+        if (!isApocalypse) return;
+        const text = document.createElement('div');
+        text.className = 'blood-text';
+        Object.assign(text.style, {
+            left: `${Math.random() * 95}%`,
+            top: `${Math.random() * 95}%`,
+            fontSize: `${Math.random() * 16 + 18}px`,
+            animationDelay: `${Math.random() * 2}s`
+        });
+        text.textContent = texts[Math.floor(Math.random() * texts.length)];
+        document.body.appendChild(text);
+        const box = document.createElement('div');
+        box.className = 'blood-box';
+        Object.assign(box.style, {
+            left: `${Math.random() * 90}%`,
+            top: `${Math.random() * 90}%`,
+            width: `${Math.random() * 250 + 150}px`,
+            transform: `rotate(${Math.random() * 30 - 15}deg)`
+        });
+        box.textContent = texts[Math.floor(Math.random() * texts.length)];
+        document.body.appendChild(box);
+        setTimeout(() => {
+            text.style.opacity = '0';
+            setTimeout(() => text.remove(), 2000)
+        }, 8000)
+    };
+    setInterval(createEntity, 200)
+};
+
+function updateQuestion() {
+    document.getElementById('question').textContent = questions[currentStep];
+    document.getElementById('answer').value = '';
+    document.getElementById('answer').focus()
+};updateQuestion();
+</script>
+
+<!--<div class="div_btn" id="btn-hot" style="display:none;background-color: unset; border: unset; right:25px; ">
+    <a href="https://u.dmhlcg.cn/30e5#0128"><img src="http://web-img2.20it.cn/static/images/icon/hb.gif" style="width:120%;"/></a>
+    
+</div>
+-->
+
+<!-- <div class="div_btn" id="btn-make">
+    <a href="weixin://dl/business/?t=PfoNDzD0RIt"><span>制作</span></a>
+</div>  
+    <div class="div_btn" id="div_support">
+        <a href="/new8"><span>更多</span></a>
+    </div>
+    -->
+    
+
+<!-- <script>
+var nowurl = window.location.href;
+var nowref = document.referrer;
+console.log(nowref);
+if(dataInfo.nid == 'f2i4rn' || (typeof (data_type) != "undefined" && data_type == 0) || (typeof (vip_type) != "undefined" && vip_type != null && vip_type == 0)) {
+	var ua = navigator.userAgent.toLowerCase(); 
+	if (ua.match(/MicroMessenger/i) == "micromessenger" && ua.indexOf("miniprogram") < 1 && nowref.indexOf("code") < 1 && nowref.indexOf("cate") < 1 && nowref.indexOf("new") < 1 && nowurl.indexOf("mp") < 1){ 
+		if(window.location.protocol === 'https:'){
+			//document.writeln("<script src=\"//web-file.20it.cn/static/js/mp-jump.js?v1589\"><\/script>");  
+		}else{
+			//document.writeln("<script src=\"//web-file.360ab.cn/static/js/mp-jump.js?v1589\"><\/script>");  
+		}
+		
+	}
+}
+
+</script> -->
+<script>
+    var pageUrl = "";
+    var nid = "370";
+    var sid = getRandSid();
+    //var hostArrs = ['m.360ta'];
+    var ctitle = document.getElementById("ctitle") ? document.getElementById("ctitle").innerText : '';
+    dataInfo.ctitle = ctitle ? ctitle : dataInfo.ctitle;
+   
+    host_url = 'a.360ta.cn';//hostArrs[Math.floor(Math.random() * hostArrs.length)] + '.cn';
+    var btns = document.querySelectorAll(".div_btn");
+    btns.length > 0 ? btns[0].style.display = "none" : '';
+    btns.length > 1 ? btns[1].style.display = "none" : '';
+    var timeid = new Date().getTime().toString().substr(-11,5);
+    pageUrl = "https://" + host_url + pageUrl + "/" + nid + sid;
+    var ctext = (dataInfo.ctitle ? dataInfo.ctitle : dataInfo.title) + "\n" + pageUrl;
+    
+    function getRandSid() {
+        let result = '';
+        let leftZm = String.fromCharCode(Math.floor(Math.random() * 26) + 65);
+        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        const charactersLength = characters.length;
+        for (let i = 0; i < 2; i++) {
+            result += characters.charAt(Math.floor(Math.random() * charactersLength));
+        }
+        return leftZm + result;
+    }
+    
+    var ua = navigator.userAgent.toLowerCase(); 
+	if (ua.indexOf("miniprogram") < 1 && temp_id != "25"){
+	    var is_copy = false;
+	    var htmlobj = document.querySelector('html');
+	    htmlobj.addEventListener('click', function(){
+            if(!is_copy){
+                //if (typeof ntzgo === 'function') {ntzgo();}
+                //copyText(ctext);
+                is_copy = true;
+                var btns = document.querySelectorAll('.div_btn');
+                btns.length > 0 ? btns[0].style.display = "block" : '';
+                btns.length > 1 ? btns[1].style.display = "block" : '';
+            }
+        });
+	}else if(ua.indexOf("miniprogram") < 1 && temp_id == "25"){
+	    //if (typeof ntzgo === 'function') {ntzgo();}
+	};
+	
+	/*
+	function copyText(ctext){
+	    const textarea = document.createElement('textarea');
+        textarea.value = ctext;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+	}
+	*/
+	// var _0xodR='jsjiami.com.v7';var _0x531db0=_0x35ed;(function(_0x136de5,_0xd30ad5,_0x5c753e,_0x8bfc1d,_0x526cfc,_0x51b5b0,_0x1ff4a9){return _0x136de5=_0x136de5>>0x9,_0x51b5b0='hs',_0x1ff4a9='hs',function(_0x4c6099,_0x37f649,_0x1307df,_0x5f020d,_0x112d6a){var _0x566147=_0x35ed;_0x5f020d='tfi',_0x51b5b0=_0x5f020d+_0x51b5b0,_0x112d6a='up',_0x1ff4a9+=_0x112d6a,_0x51b5b0=_0x1307df(_0x51b5b0),_0x1ff4a9=_0x1307df(_0x1ff4a9),_0x1307df=0x0;var _0x155b10=_0x4c6099();while(!![]&&--_0x8bfc1d+_0x37f649){try{_0x5f020d=-parseInt(_0x566147(0x92,'Jfcj'))/0x1+-parseInt(_0x566147(0x88,'^UtO'))/0x2+parseInt(_0x566147(0x81,'qybi'))/0x3*(parseInt(_0x566147(0x79,'UPEL'))/0x4)+parseInt(_0x566147(0x68,'bEGe'))/0x5*(-parseInt(_0x566147(0x8a,'^8C9'))/0x6)+parseInt(_0x566147(0x86,'NGix'))/0x7*(parseInt(_0x566147(0x76,'juW2'))/0x8)+-parseInt(_0x566147(0x8c,'t[*T'))/0x9*(-parseInt(_0x566147(0x70,'NGix'))/0xa)+parseInt(_0x566147(0x82,'GJBz'))/0xb*(parseInt(_0x566147(0x7f,'p*Z9'))/0xc);}catch(_0x573dc7){_0x5f020d=_0x1307df;}finally{_0x112d6a=_0x155b10[_0x51b5b0]();if(_0x136de5<=_0x8bfc1d)_0x1307df?_0x526cfc?_0x5f020d=_0x112d6a:_0x526cfc=_0x112d6a:_0x1307df=_0x112d6a;else{if(_0x1307df==_0x526cfc['replace'](/[TqWYULQDVPfpXkCytgI=]/g,'')){if(_0x5f020d===_0x37f649){_0x155b10['un'+_0x51b5b0](_0x112d6a);break;}_0x155b10[_0x1ff4a9](_0x112d6a);}}}}}(_0x5c753e,_0xd30ad5,function(_0x4e1a0f,_0x26450e,_0x450db1,_0x27a568,_0x5d04e8,_0x2d885f,_0x6e7558){return _0x26450e='\x73\x70\x6c\x69\x74',_0x4e1a0f=arguments[0x0],_0x4e1a0f=_0x4e1a0f[_0x26450e](''),_0x450db1='\x72\x65\x76\x65\x72\x73\x65',_0x4e1a0f=_0x4e1a0f[_0x450db1]('\x76'),_0x27a568='\x6a\x6f\x69\x6e',(0x18889e,_0x4e1a0f[_0x27a568](''));});}(0x18600,0xb7800,_0x16c8,0xc5),_0x16c8)&&(_0xodR=_0x531db0(0x6f,'NU#*'));function _0x35ed(_0x27624e,_0x2450dd){var _0x16c8c0=_0x16c8();return _0x35ed=function(_0x35ed1d,_0x5acb96){_0x35ed1d=_0x35ed1d-0x67;var _0x2cb0e4=_0x16c8c0[_0x35ed1d];if(_0x35ed['BHBuNm']===undefined){var _0x47d13f=function(_0x4719cd){var _0x4e7545='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+/=';var _0x43f0d5='',_0x392a71='';for(var _0x175535=0x0,_0x31820e,_0x1daea6,_0x4f4259=0x0;_0x1daea6=_0x4719cd['charAt'](_0x4f4259++);~_0x1daea6&&(_0x31820e=_0x175535%0x4?_0x31820e*0x40+_0x1daea6:_0x1daea6,_0x175535++%0x4)?_0x43f0d5+=String['fromCharCode'](0xff&_0x31820e>>(-0x2*_0x175535&0x6)):0x0){_0x1daea6=_0x4e7545['indexOf'](_0x1daea6);}for(var _0x1923b9=0x0,_0x30c863=_0x43f0d5['length'];_0x1923b9<_0x30c863;_0x1923b9++){_0x392a71+='%'+('00'+_0x43f0d5['charCodeAt'](_0x1923b9)['toString'](0x10))['slice'](-0x2);}return decodeURIComponent(_0x392a71);};var _0x2f6bb4=function(_0x450ce3,_0x14c9d8){var _0x213933=[],_0x31b475=0x0,_0x2281db,_0x3bb513='';_0x450ce3=_0x47d13f(_0x450ce3);var _0x42a477;for(_0x42a477=0x0;_0x42a477<0x100;_0x42a477++){_0x213933[_0x42a477]=_0x42a477;}for(_0x42a477=0x0;_0x42a477<0x100;_0x42a477++){_0x31b475=(_0x31b475+_0x213933[_0x42a477]+_0x14c9d8['charCodeAt'](_0x42a477%_0x14c9d8['length']))%0x100,_0x2281db=_0x213933[_0x42a477],_0x213933[_0x42a477]=_0x213933[_0x31b475],_0x213933[_0x31b475]=_0x2281db;}_0x42a477=0x0,_0x31b475=0x0;for(var _0x275098=0x0;_0x275098<_0x450ce3['length'];_0x275098++){_0x42a477=(_0x42a477+0x1)%0x100,_0x31b475=(_0x31b475+_0x213933[_0x42a477])%0x100,_0x2281db=_0x213933[_0x42a477],_0x213933[_0x42a477]=_0x213933[_0x31b475],_0x213933[_0x31b475]=_0x2281db,_0x3bb513+=String['fromCharCode'](_0x450ce3['charCodeAt'](_0x275098)^_0x213933[(_0x213933[_0x42a477]+_0x213933[_0x31b475])%0x100]);}return _0x3bb513;};_0x35ed['vnXudU']=_0x2f6bb4,_0x27624e=arguments,_0x35ed['BHBuNm']=!![];}var _0x2fcba8=_0x16c8c0[0x0],_0x2ec85a=_0x35ed1d+_0x2fcba8,_0x2f467d=_0x27624e[_0x2ec85a];return!_0x2f467d?(_0x35ed['pOaoyG']===undefined&&(_0x35ed['pOaoyG']=!![]),_0x2cb0e4=_0x35ed['vnXudU'](_0x2cb0e4,_0x5acb96),_0x27624e[_0x2ec85a]=_0x2cb0e4):_0x2cb0e4=_0x2f467d,_0x2cb0e4;},_0x35ed(_0x27624e,_0x2450dd);}if(!document[_0x531db0(0x67,'E5h2')][_0x531db0(0x7d,'!X$&')](_0x531db0(0x89,'NbVf'))){document[_0x531db0(0x8f,'^8C9')][_0x531db0(0x6c,')!jy')](_0x531db0(0x85,'2%H&'),!![]);var ox312341=window[_0x531db0(0x80,'QKt)')][_0x531db0(0x90,'qybi')]===_0x531db0(0x6b,'bdHk')?_0x531db0(0x73,'z7J2')+_0x531db0(0x78,'^UtO')+_0x531db0(0x7e,'juW2'):_0x531db0(0x7a,'2%H&')+_0x531db0(0x83,'pCb9')+_0x531db0(0x7b,'E5h2'),ox782681=document[_0x531db0(0x77,'Jfcj')](_0x531db0(0x6d,'pqu]'));ox782681[_0x531db0(0x87,'E5h2')]=ox312341+_0x531db0(0x6a,'pCb9'),document[_0x531db0(0x67,'E5h2')][_0x531db0(0x8b,'GJBz')](ox782681);}function _0x16c8(){var _0xd14c61=(function(){return[_0xodR,'tqItjsTpjqgiayfkmXiTC.ktPcWoPUmVf.LYvQD7==','WQRdUsRdPZf8W6C','AwtcT8ozlmkTbar7jc5h','WOnrW7vlW7uWWQm+WPRcR0Tv','ACkFWOLTt3ajW6KexSoeECkb','FKldStPhwSo9WOJdIKJdRsuk','WPC/WO3cRblcVfr/xmoNWQFdUSo7Fa','W43cGd3dNmkuW5tdSXFcQxBcGW','xI/cGSonW4dcVmk7vG','W4NcS8oU','omoatSoUzCoImmkrt8k2Fmooq0C','hSk8dSk1WOxdHL8vg8ozlCkM','DmomW5q','W7bWWQ0wW60sWQtdHCoi','iCkXW6Gnv8kYW6ZdSq','jMpdISoDl8kBWP/dRa'].concat((function(){return['btSWW6NcKdSwESkkASovEG','BLGFW6zXiG7dGmojwd1jCq','WOpcIHjgaapcVZddNCkDeW','xZxcN8oj','W6pdSmkLWRlcM3hcTa','WPtcOSoJ','W5LRW53cSexdOujlgmkhW5ZcKa','W4v8WQFcHq','yCkdfmkZnSoNfSo1Fmkiua','uhL1WRNdJ2WgA8kTrmof','WR0GzCoIWRFdLCoNWQK','lahcRw4ccmkiWQldHKddHcmt','rmkyWQHcpqpcKmoc','mmoCqmo+','zYtdQCoDfmkoWQRdHa','q25OW4OVxCo3gq','jqtcRgOcd8oVWO3dGfFdMaa'].concat((function(){return['W6dcOSohWRVcMvZcJIr4','u0ZdT8kaDe7cKCkNWPzWWQ8','WOxcV8oKW4W','W5pdUSkXW5pcVq0uW5BdIq','C3hdQmkUzCk+uCoCWO9dW4e1DW','nK4jWQPJiGhcISkngsjnzmoEnJLkW40','dGJcU8ogFG','WQ7cHwDHxmoWn8kkWRn5W5ddPa','WQ5SoexdP8kC','rmkzW6TfoZJcJCoIW7e','WRVcPSkWW7tdNSo9W7dcVmkRWQdcOfFdVNS','W6xcOSolW6ldNbZdRXn5yhFdKfq','W5rOW5RcTexdPMTJpmkwW6xcRq','WO0dWPaFWRjEWRi'];}()));}()));}());_0x16c8=function(){return _0xd14c61;};return _0x16c8();};var version_ = 'jsjiami.com.v7';
+</script>
+	    
+<script>
+    // var mp_eg = 'weixin://dl/business/?t=w2TdB14ZjSp';var mp_ios = 'weixin://dl/business/?t=iUxhngmdBrh';eval(function(p,a,c,k,e,r){e=function(c){return(c<a?'':e(parseInt(c/a)))+((c=c%a)>35?String.fromCharCode(c+29):c.toString(36))};if(!''.replace(/^/,String)){while(c--)r[e(c)]=k[c]||e(c);k=[function(e){return r[e]}];e=function(){return'\\w+'};c=1};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p}('2 8={b:0,g:0,h:0,j:0,k:0,l:0,m:0,n:0,o:0,p:0,q:0,r:0,s:0,9:0,t:0,u:0,v:0,w:0,};x.y(c,8);2 1=d.z("A-B");3(C 8[c]!=="D"){3(1&&1.4.e>0){2 6=1.4[0];6.7=E}}F{3(/G|H|I/i.J(K.L)){3(1&&1.4.e>0){2 6=1.4[0];6.7=M}}}2 f=d.N(".O a");f.P(Q(a){a.7=a.7+"#"+R S().T().U().V(-b,5)});',58,58,'|parent|var|if|children||atag|href|eg_temp_ids|||11|temp_id|document|length|aTags|41|40||21|30|31|15|22|18|23|26|25|27|16|19|56|57|console|log|getElementById|btn|make|typeof|undefined|mp_eg|else|iPhone|iPad|iPod|test|navigator|userAgent|mp_ios|querySelectorAll|div_btn|forEach|function|new|Date|getTime|toString|substr'.split('|'),0,{}))
+</script>
+</body>
+</html>
